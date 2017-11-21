@@ -7,6 +7,7 @@ namespace NetworkAPI
 {
     namespace NetworkMessage
     {
+        [Serializable]
         public partial class NetMessage
         {
             public enum MessageType
@@ -23,7 +24,9 @@ namespace NetworkAPI
                 SignInFail = 21,
                 SignUpFail = 22,
                 CheckMD5Fail = 23,
-                GetListFail = 24
+                GetListFail = 24,
+
+                Success = 50
             }
             protected MessageType message;
             protected object data;
