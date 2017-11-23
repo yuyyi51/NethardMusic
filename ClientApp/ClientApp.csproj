@@ -80,9 +80,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NetworkAPI\NetworkAPI.csproj">
-      <Project>{b22b93a1-1da2-4230-a4e8-48acfc49a3b3}</Project>
-      <Name>NetworkAPI</Name>
+    <ProjectReference Include="..\ClientAPI\ClientAPI.csproj">
+      <Project>{ca75d577-14e4-4ad6-bd7c-51ee27068529}</Project>
+      <Name>ClientAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

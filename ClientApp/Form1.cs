@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using NetworkAPI;
+using ClientAPI;
 
 namespace ClientApp
 {
@@ -20,7 +20,7 @@ namespace ClientApp
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            await ClientAPI.SignUp("yuyyi51", "123456");
+            await ClientAPI.ClientAPI.SignUp("yuyyi51", "123456");
         }
     }
 }
