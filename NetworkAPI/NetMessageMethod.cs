@@ -48,6 +48,14 @@ namespace NetworkAPI
             {
                 return new NetMessage(MessageType.GetListFail);
             }
+            public static NetMessage GetFailMessage()
+            {
+                return new NetMessage(MessageType.Fail);
+            }
+            public static NetMessage GetSuccessMessage()
+            {
+                return new NetMessage(MessageType.Success);
+            }
         }
     }
 }

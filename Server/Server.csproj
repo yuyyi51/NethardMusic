@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ServerAPI.cs" />
     <Compile Include="ServerMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -50,6 +51,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DatabaseAPI\DatabaseAPI.csproj">
+      <Project>{bff4923a-0bb8-406c-8f8d-a59c09414bfe}</Project>
+      <Name>DatabaseAPI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NetworkAPI\NetworkAPI.csproj">
       <Project>{b22b93a1-1da2-4230-a4e8-48acfc49a3b3}</Project>
       <Name>NetworkAPI</Name>

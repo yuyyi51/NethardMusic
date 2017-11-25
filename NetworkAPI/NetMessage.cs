@@ -26,6 +26,7 @@ namespace NetworkAPI
                 CheckMD5Fail = 23,
                 GetListFail = 24,
 
+                Fail = 40,
                 Success = 50
             }
             protected MessageType message;

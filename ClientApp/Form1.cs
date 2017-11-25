@@ -20,7 +20,19 @@ namespace ClientApp
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            await ClientAPI.ClientAPI.SignUp("yuyyi51", "123456");
+            string username = textBox1.Text;
+            string password = textBox2.Text;
+            bool result = await ClientAPI.ClientAPI.SignUp(username,password);
+            label1.Text = result.ToString();
+            //MessageBox.Show("finished");
+        }
+
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            string username = textBox1.Text;
+            string password = textBox2.Text;
+            bool result = await ClientAPI.ClientAPI.SignIn(username, password);
+            label1.Text = result.ToString();
         }
     }
 }
