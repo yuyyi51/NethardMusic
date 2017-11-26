@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NetworkAPI;
 using NetworkAPI.NetworkMessage;
-using DatabaseAPI;
+using static NetworkAPI.NetworkMessage.NetMessage;
 namespace Server
 {
     partial class ServerMain
@@ -16,13 +16,27 @@ namespace Server
         }
         static void AcceptConnectionFunc(TcpConnection con)
         {
-            con.ConnectionCloseEvent += (TcpConnection co) => Console.Out.WriteLine(co.ToString() + "已断开");
-            con.LostConnectionEvent += (TcpConnection co) => Console.Out.WriteLine(co.ToString() + "已断开");
+            con.ConnectionCloseEvent += (TcpConnection co) =>
+            {
+                if(co.Connected)
+                    Console.Out.WriteLine(co.ToString() + " 已断开");
+            };
             AcceptMessage(con);
         }
         static async void AcceptMessage(TcpConnection con)
         {
-            object obj = await con.ReceiveOnceAsync();
+            object obj;
+            try
+            {
+                obj = await con.ReceiveOnceAsync();
+            }
+            catch(Exception e)
+            {
+                Console.Out.WriteLine("tag1");
+                Console.Out.WriteLine(e.Message);
+                con.Close();
+                return;
+            }
             NetMessage message = null;
             try
             {
@@ -31,29 +45,28 @@ namespace Server
             catch(Exception e)
             {
                 Console.Out.WriteLine(e.Message);
-                con.Close();
                 return;
             }
-            NetMessage returnMessage;
             switch(message.Message)
             {
-                case NetMessage.MessageType.SignIn:
-                    Console.Out.WriteLine();
-                    returnMessage = await SignInAsync(message);
+                case MessageType.SignIn:
+                    SignIn(con, message);
                     break;
-                case NetMessage.MessageType.SignUp:
-                    returnMessage = await SignUpAsync(message);
+                case MessageType.SignUp:
+                    SignUp(con, message);
+                    break;
+                case MessageType.GetList:
+                    GetMusicList(con, message);
+                    break;
+                case MessageType.CheckMD5:
+                    CheckMD5(con, message);
+                    break;
+                case MessageType.Upload:
+                    AddMusic(con, message);
                     break;
                 default:
-                    returnMessage = new NetMessage(NetMessage.MessageType.Error);
                     break;
             }
-            /*string[] d = message.Data as string[];
-            Console.Out.WriteLine(d[0] + " " + d[1]);
-            Console.Out.WriteLine("再次加密后 " + DatabaseAPI.DatabaseAPI.Encrypt(d[1]));
-            NetMessage sus = new NetMessage(NetMessage.MessageType.Success);
-            await con.Send(sus);*/
-            con.Close();
         }
         static void Main(string[] args)
         {

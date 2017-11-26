@@ -24,13 +24,17 @@ namespace NetworkAPI
             {
                 return new NetMessage(MessageType.CheckMD5, md5);
             }
-            public static NetMessage GetUploadMessage(byte[] file)
+            public static NetMessage GetUploadMessage(MusicFile file)
             {
                 return new NetMessage(MessageType.Upload, file);
             }
             public static NetMessage GetGetListMessage()
             {
                 return new NetMessage(MessageType.GetList);
+            }
+            public static NetMessage GetGetListSuccessMessage(MusicInfo[] info)
+            {
+                return new NetMessage(MessageType.GetListSuccess, info);
             }
             public static NetMessage GetSignInFailMessage()
             {

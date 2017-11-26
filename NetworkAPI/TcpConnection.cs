@@ -37,7 +37,7 @@ namespace NetworkAPI
         public event TcpConnectionReceiveObjectDoneHandler ReceiveObjectDoneEvent;
         public TcpConnection()
         {
-            bufferSize = 1024;
+            bufferSize = 1024000;
             buffer = new byte[bufferSize];
             packager = new Packager();
             receiving = false;
@@ -48,7 +48,7 @@ namespace NetworkAPI
         }
         public TcpConnection(TcpClient cli)
         {
-            bufferSize = 1024;
+            bufferSize = 1024000;
             buffer = new byte[bufferSize];
             packager = new Packager();
             receiving = false;
@@ -59,7 +59,7 @@ namespace NetworkAPI
         }
         public TcpConnection(byte[] header)
         {
-            bufferSize = 1024;
+            bufferSize = 1024000;
             buffer = new byte[bufferSize];
             packager = new Packager(header);
             receiving = false;
@@ -70,7 +70,7 @@ namespace NetworkAPI
         }
         public TcpConnection(TcpClient cli, byte[] header)
         {
-            bufferSize = 1024;
+            bufferSize = 1024000;
             buffer = new byte[bufferSize];
             packager = new Packager(header);
             receiving = false;
@@ -81,7 +81,7 @@ namespace NetworkAPI
         }
         public TcpConnection(Packager pk)
         {
-            bufferSize = 1024;
+            bufferSize = 1024000;
             buffer = new byte[bufferSize];
             packager = new Packager(pk);
             receiving = false;
@@ -92,7 +92,7 @@ namespace NetworkAPI
         }
         public TcpConnection(TcpClient cli, Packager pk)
         {
-            bufferSize = 1024;
+            bufferSize = 1024000;
             buffer = new byte[bufferSize];
             packager = new Packager(pk);
             receiving = false;
@@ -186,6 +186,7 @@ namespace NetworkAPI
         {
             NetworkStream netstream = client.GetStream();
             int receivedNum;
+            //header
             try
             {
                 receivedNum = await netstream.ReadAsync(buffer, 0, packager.Length + sizeof(int));
@@ -220,11 +221,15 @@ namespace NetworkAPI
             }
             byte[] len = new byte[4];
             Array.Copy(tem, packager.Length, len, 0, sizeof(int));
+            //header end
+
+            //data
             int length = ByteConverter.Byte2Int(len);
             remainReceiveLength = length;
             int readsize = remainReceiveLength < bufferSize ? remainReceiveLength : bufferSize;
             while (remainReceiveLength > 0)
             {
+                Console.Out.WriteLine(remainReceiveLength);
                 try
                 {
                     receivedNum = await netstream.ReadAsync(buffer, 0, readsize);

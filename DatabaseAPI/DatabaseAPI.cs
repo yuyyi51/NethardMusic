@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySqlHelperY;
 using System.Security.Cryptography;
+using System.Data;
 
 namespace DatabaseAPI
 {
@@ -18,6 +19,7 @@ namespace DatabaseAPI
         }
         public static string Encrypt(string password)
         {
+            password = salt + password + salt;
             MD5 md5 = new MD5CryptoServiceProvider();
             byte[] value = Encoding.UTF8.GetBytes(password);
             byte[] hash = md5.ComputeHash(value);
@@ -33,24 +35,70 @@ namespace DatabaseAPI
         public static async Task<bool> SignUpAsync(string username, string password)
         {
             //注册
-            string command = string.Format("select count(*) from user where username = '{0}'; ",username);
-            int count = await helper.ExecuteNonQueryAsync(command);
+            string command = string.Format("select count(*) from user where username = '{0}';",username);
+            object obj = await helper.ExecuteScalar(command);
+            long count = (long)obj;
             if(count > 0)
             {
                 return false;
             }
-            command = string.Format("insert into user(username,password)value({0},{1});", username, password);
-            count = await helper.ExecuteNonQueryAsync(command);
-            if (count == 0)
-                return false;
-            return true;
+            command = string.Format("insert into user(username,`password`) value('{0}','{1}');", username, password);
+            try
+            {
+                count = await helper.ExecuteNonQueryAsync(command);
+            }
+            catch(Exception)
+            {
+                return false ;
+            }
+            return count > 0;
         }
         public static async Task<bool> SignInAsync(string username, string password)
         {
             //登录
-            string command = string.Format("select count(*) from user where username = '{0}' and password = '{1}'; ", username, password);
-            int count = await helper.ExecuteNonQueryAsync(command);
+            string command = string.Format("select count(*) from user where username = '{0}' and `password` = '{1}';", username, password);
+            object obj = await helper.ExecuteScalar(command);
+            //Console.Out.WriteLine( obj.GetType());
+            long count = (long)obj;
             return count > 0;
+        }
+        public static async Task<bool> CheckMD5Async(string md5)
+        {
+            //检查md5
+            string command = string.Format("select count(*) from u_music where MD5 = '{0}';", md5);
+            object obj = await helper.ExecuteScalar(command);
+            long count = (long)obj;
+            return count > 0;
+        }
+        public static async Task<bool> AddMusicAsync(string name, string singer, string suffix, string md5)
+        {
+            //加入歌曲
+            bool exist = await CheckMD5Async(md5);
+            if (exist)
+                return false;
+            string command = string.Format("insert into u_music value('{0}','{1}','{2}','{3}');", name, singer, suffix, md5);
+            int count;
+            try
+            {
+                count = await helper.ExecuteNonQueryAsync(command);
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            return count > 0;
+        }
+        public static async Task<DataSet> GetMusicList()
+        {
+            string command = "select * from u_music ;";
+            try
+            {
+                return await helper.ExecuteDataSetAsync(command);
+            }
+            catch(Exception)
+            {
+                return null;
+            }
         }
     }
 }

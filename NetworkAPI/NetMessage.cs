@@ -26,6 +26,7 @@ namespace NetworkAPI
                 CheckMD5Fail = 23,
                 GetListFail = 24,
 
+                GetListSuccess = 30,
                 Fail = 40,
                 Success = 50
             }
