@@ -48,6 +48,7 @@ namespace Server
                 FileStream fs = File.Open(filepath, FileMode.CreateNew);
                 fs.Write(file, 0, file.Length);
                 fs.Flush();
+                fs.Close();
             }
             catch (Exception)
             {

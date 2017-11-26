@@ -66,7 +66,7 @@ namespace ClientApp
 
         private async void button5_Click(object sender, EventArgs e)
         {
-            listView1.Clear();
+            listView1.Items.Clear();
             MusicInfo[] infos = await ClientAPI.ClientAPI.GetMusicList();
             foreach(MusicInfo info in infos)
             {
@@ -76,6 +76,27 @@ namespace ClientApp
                 item.SubItems.Add(info.url);
                 listView1.Items.Add(item);
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.settings.volume = 20;
+        }
+
+        private void listView1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void listView1_DoubleClick(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count <= 0)
+                return;
+            ListViewItem item = listView1.SelectedItems[0];
+            string url = item.SubItems[2].Text;
+            //MessageBox.Show(url);
+            axWindowsMediaPlayer1.URL = url;
+            axWindowsMediaPlayer1.Ctlcontrols.play();
         }
     }
 }
