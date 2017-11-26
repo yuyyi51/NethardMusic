@@ -8,9 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NetworkAPI;
-using ClientAPI;
 
-namespace ClientApp
+namespace ClientApp2
 {
     public partial class Form1 : Form
     {
@@ -23,9 +22,9 @@ namespace ClientApp
         {
             string username = textBox1.Text;
             string password = textBox2.Text;
-            bool result = await ClientAPI.ClientAPI.SignUp(username,password);
-            label1.Text = result.ToString();
-            //MessageBox.Show("finished");
+            bool result = await ClientAPI.ClientAPI.SignUp(username, password);
+            //label1.Text = result.ToString();
+            MessageBox.Show(result?"注册成功":"注册失败");
         }
 
         private async void button2_Click(object sender, EventArgs e)
@@ -33,26 +32,38 @@ namespace ClientApp
             string username = textBox1.Text;
             string password = textBox2.Text;
             bool result = await ClientAPI.ClientAPI.SignIn(username, password);
-            label1.Text = result.ToString();
+            //label1.Text = result.ToString();
+            MessageBox.Show(result ? "登录成功" : "登录失败");
         }
 
         private async void button3_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dia = new OpenFileDialog();
-            string path;
-            if (dia.ShowDialog() == DialogResult.OK)
+            string path = textBox5.Text;
+            if (path == null)
             {
-                path = dia.FileName;
-            }
-            else
+                MessageBox.Show("请先选择文件");
                 return;
-            await ClientAPI.ClientAPI.CheckMD5(path);
+            }
+            bool result = await ClientAPI.ClientAPI.CheckMD5(path);
+            MessageBox.Show(result ? "没有相同文件" : "已有相同文件");
         }
 
         private async void button4_Click(object sender, EventArgs e)
         {
             string name = textBox3.Text;
             string singer = textBox4.Text;
+            string path = textBox5.Text;
+            if (path == null)
+            {
+                MessageBox.Show("请先选择文件");
+                return;
+            }
+            bool result = await ClientAPI.ClientAPI.UploadMusic(path, name, singer);
+            MessageBox.Show(result ? "上传成功" : "上传失败");
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
             OpenFileDialog dia = new OpenFileDialog();
             string path;
             if (dia.ShowDialog() == DialogResult.OK)
@@ -61,15 +72,14 @@ namespace ClientApp
             }
             else
                 return;
-            await ClientAPI.ClientAPI.UploadMusic(path, name, singer);
-            label1.Text = "上传完毕";
+            textBox5.Text = path;
         }
 
-        private async void button5_Click(object sender, EventArgs e)
+        private async void button6_Click(object sender, EventArgs e)
         {
             listView1.Items.Clear();
             MusicInfo[] infos = await ClientAPI.ClientAPI.GetMusicList();
-            foreach(MusicInfo info in infos)
+            foreach (MusicInfo info in infos)
             {
                 ListViewItem item = new ListViewItem();
                 item.Text = info.name;
@@ -79,14 +89,9 @@ namespace ClientApp
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            axWindowsMediaPlayer1.settings.volume = 20;
-        }
 
-        private void listView1_Click(object sender, EventArgs e)
-        {
-            
         }
 
         private void listView1_DoubleClick(object sender, EventArgs e)
@@ -98,6 +103,11 @@ namespace ClientApp
             //MessageBox.Show(url);
             axWindowsMediaPlayer1.URL = url;
             axWindowsMediaPlayer1.Ctlcontrols.play();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.settings.volume = 20;
         }
     }
 }

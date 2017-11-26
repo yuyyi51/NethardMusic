@@ -32,8 +32,14 @@ namespace Server
             }
             catch(Exception e)
             {
-                Console.Out.WriteLine("tag1");
+                //Console.Out.WriteLine("tag1");
                 Console.Out.WriteLine(e.Message);
+                con.Close();
+                return;
+            }
+            if(obj == null)
+            {
+                Console.Out.WriteLine("非指定程序的连接");
                 con.Close();
                 return;
             }
@@ -45,6 +51,7 @@ namespace Server
             catch(Exception e)
             {
                 Console.Out.WriteLine(e.Message);
+                con.Close();
                 return;
             }
             switch(message.Message)
@@ -70,9 +77,9 @@ namespace Server
         }
         static void Main(string[] args)
         {
-            string host = "127.0.0.1";
+            string host = "120.24.36.239";
             int port = 7777;
-            string connectionstr = "server=localhost;user=root;database=test;port=3307;password=111qqq";
+            string connectionstr = "server=localhost;user=root;database=test;port=3306;password=123sql";
             DatabaseAPI.API.Init(connectionstr);
             TcpServer server = new TcpServer(host, port);
             server.AcceptConnectionEvent += AcceptConnectionConsole;

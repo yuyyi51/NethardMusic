@@ -13,7 +13,7 @@ namespace ClientAPI
     public class ClientAPI
     {
         protected static string salt = "IORGHTJBVFDNSKJFGRTKDSJMCVNDFJRHSFKDSGDT";
-        protected static string ip = "127.0.0.1";
+        protected static string ip = "120.24.36.239";
         protected static int port = 7777;
         public static string Encrypt(string password)
         {
@@ -71,6 +71,7 @@ namespace ClientAPI
             FileStream file = new FileStream(path, FileMode.Open);
             MD5 md5 = new MD5CryptoServiceProvider();
             byte[] retVal = md5.ComputeHash(file);
+            file.Close();
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < retVal.Length; i++)
             {

@@ -42,8 +42,8 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.MusicName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Singer = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Url = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
+            this.Url = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -161,11 +161,6 @@
             this.Singer.Text = "歌手";
             this.Singer.Width = 150;
             // 
-            // Url
-            // 
-            this.Url.Text = "URL";
-            this.Url.Width = 300;
-            // 
             // axWindowsMediaPlayer1
             // 
             this.axWindowsMediaPlayer1.Enabled = true;
@@ -175,23 +170,16 @@
             this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(210, 136);
             this.axWindowsMediaPlayer1.TabIndex = 11;
             // 
+            // Url
+            // 
+            this.Url.Text = "URL";
+            this.Url.Width = 300;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(774, 531);
-            this.Controls.Add(this.axWindowsMediaPlayer1);
-            this.Controls.Add(this.listView1);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -216,8 +204,8 @@
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ColumnHeader MusicName;
         private System.Windows.Forms.ColumnHeader Singer;
-        private System.Windows.Forms.ColumnHeader Url;
         private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
+        private System.Windows.Forms.ColumnHeader Url;
     }
 }
 

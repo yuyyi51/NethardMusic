@@ -14,8 +14,8 @@ namespace Server
 {
     partial class ServerMain
     {
-        private static string path = "D:\\NethardMusic\\";
-        private static string outpath = "D:\\NethardMusic\\";
+        private static string path = "C:\\Website\\music\\";
+        private static string outpath = "http://int-2.cn/music/";
         private static void WriteLog(TcpConnection con, string message)
         {
             Console.Out.WriteLine(con.ToString() + " " + message);
