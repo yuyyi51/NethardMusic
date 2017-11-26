@@ -208,7 +208,7 @@
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Text = "歌名";
+            this.columnHeader2.Text = "歌手";
             this.columnHeader2.Width = 150;
             // 
             // columnHeader3
