@@ -22,6 +22,12 @@ namespace ClientApp2
         {
             string username = textBox1.Text;
             string password = textBox2.Text;
+            if (username == "" || password == "")
+            {
+                MessageBox.Show("请输入用户名和密码");
+                return;
+            }
+
             bool result = await ClientAPI.ClientAPI.SignUp(username, password);
             //label1.Text = result.ToString();
             MessageBox.Show(result?"注册成功":"注册失败");
@@ -31,6 +37,11 @@ namespace ClientApp2
         {
             string username = textBox1.Text;
             string password = textBox2.Text;
+            if (username == "" || password == "")
+            {
+                MessageBox.Show("请输入用户名和密码");
+                return;
+            }
             bool result = await ClientAPI.ClientAPI.SignIn(username, password);
             //label1.Text = result.ToString();
             MessageBox.Show(result ? "登录成功" : "登录失败");
@@ -39,7 +50,7 @@ namespace ClientApp2
         private async void button3_Click(object sender, EventArgs e)
         {
             string path = textBox5.Text;
-            if (path == null)
+            if (path == "")
             {
                 MessageBox.Show("请先选择文件");
                 return;
@@ -52,13 +63,22 @@ namespace ClientApp2
         {
             string name = textBox3.Text;
             string singer = textBox4.Text;
+            if(name == "" || singer == "")
+            {
+                MessageBox.Show("请输入歌名和歌手");
+                return;
+            }
             string path = textBox5.Text;
-            if (path == null)
+            if (path == "")
             {
                 MessageBox.Show("请先选择文件");
                 return;
             }
+            button4.Enabled = false;
+            button4.Text = "上传中";
             bool result = await ClientAPI.ClientAPI.UploadMusic(path, name, singer);
+            button4.Text = "上传";
+            button4.Enabled = true;
             MessageBox.Show(result ? "上传成功" : "上传失败");
         }
 

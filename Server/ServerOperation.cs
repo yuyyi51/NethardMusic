@@ -18,15 +18,15 @@ namespace Server
         private static string outpath = "http://int-2.cn/music/";
         private static void WriteLog(TcpConnection con, string message)
         {
-            Console.Out.WriteLine(con.ToString() + " " + message);
+            Console.Out.WriteLine(DateTime.Now.ToString() + " " + con.ToString() + " " + message);
         }
         private static void WriteLog(TcpConnection con, string message, object obj)
         {
-            Console.Out.WriteLine(con.ToString() + " " + string.Format(message, obj));
+            Console.Out.WriteLine(DateTime.Now.ToString() + " " + con.ToString() + " " + string.Format(message, obj));
         }
         private static void WriteLog(TcpConnection con, string message, params object[] objs)
         {
-            Console.Out.WriteLine(con.ToString() + " " + string.Format(message,objs));
+            Console.Out.WriteLine(DateTime.Now.ToString() + " " + con.ToString() + " " + string.Format(message,objs));
         }
         private static string GetMusicMD5(byte[] file)
         {

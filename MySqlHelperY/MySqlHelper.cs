@@ -52,7 +52,7 @@ namespace MySqlHelperY
                 throw e;
             }
         }
-        public async Task<object> ExecuteScalar(string command)
+        public async Task<object> ExecuteScalarAsync(string command)
         {
             try
             {

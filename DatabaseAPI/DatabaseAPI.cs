@@ -36,7 +36,7 @@ namespace DatabaseAPI
         {
             //注册
             string command = string.Format("select count(*) from user where username = '{0}';",username);
-            object obj = await helper.ExecuteScalar(command);
+            object obj = await helper.ExecuteScalarAsync(command);
             long count = (long)obj;
             if(count > 0)
             {
@@ -57,7 +57,7 @@ namespace DatabaseAPI
         {
             //登录
             string command = string.Format("select count(*) from user where username = '{0}' and `password` = '{1}';", username, password);
-            object obj = await helper.ExecuteScalar(command);
+            object obj = await helper.ExecuteScalarAsync(command);
             //Console.Out.WriteLine( obj.GetType());
             long count = (long)obj;
             return count > 0;
@@ -66,7 +66,7 @@ namespace DatabaseAPI
         {
             //检查md5
             string command = string.Format("select count(*) from u_music where MD5 = '{0}';", md5);
-            object obj = await helper.ExecuteScalar(command);
+            object obj = await helper.ExecuteScalarAsync(command);
             long count = (long)obj;
             return count > 0;
         }

@@ -12,14 +12,14 @@ namespace Server
     {
         static void AcceptConnectionConsole(TcpConnection con)
         {
-            Console.Out.WriteLine(con.ToString() + " 已连接");
+            Console.Out.WriteLine(DateTime.Now.ToString() + " " + con.ToString() + " 已连接");
         }
         static void AcceptConnectionFunc(TcpConnection con)
         {
             con.ConnectionCloseEvent += (TcpConnection co) =>
             {
                 if(co.Connected)
-                    Console.Out.WriteLine(co.ToString() + " 已断开");
+                    Console.Out.WriteLine(DateTime.Now.ToString() + " " + co.ToString() + " 已断开");
             };
             AcceptMessage(con);
         }
@@ -33,13 +33,13 @@ namespace Server
             catch(Exception e)
             {
                 //Console.Out.WriteLine("tag1");
-                Console.Out.WriteLine(e.Message);
+                Console.Out.WriteLine(DateTime.Now.ToString() + " " + e.Message);
                 con.Close();
                 return;
             }
             if(obj == null)
             {
-                Console.Out.WriteLine("非指定程序的连接");
+                Console.Out.WriteLine(DateTime.Now.ToString() + " " + "非指定程序的连接");
                 con.Close();
                 return;
             }
@@ -50,7 +50,7 @@ namespace Server
             }
             catch(Exception e)
             {
-                Console.Out.WriteLine(e.Message);
+                Console.Out.WriteLine(DateTime.Now.ToString() + " " + e.Message);
                 con.Close();
                 return;
             }
