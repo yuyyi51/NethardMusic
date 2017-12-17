@@ -198,8 +198,8 @@
             // 
             // columnHeader3
             // 
-            this.columnHeader3.Text = "URL";
-            this.columnHeader3.Width = 500;
+            this.columnHeader3.Text = "上传者";
+            this.columnHeader3.Width = 200;
             // 
             // textBox5
             // 
