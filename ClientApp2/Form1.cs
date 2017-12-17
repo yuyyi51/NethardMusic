@@ -129,5 +129,17 @@ namespace ClientApp2
         {
             axWindowsMediaPlayer1.settings.volume = 20;
         }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Form2 dia = new Form2();
+            dia.ShowDialog();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            Form3 dia = new Form3();
+            dia.ShowDialog();
+        }
     }
 }

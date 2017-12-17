@@ -70,23 +70,26 @@ namespace DatabaseAPI
             long count = (long)obj;
             return count > 0;
         }
-        public static async Task<bool> AddMusicAsync(string name, string singer, string suffix, string md5)
+        public static async Task<bool> AddMusicAsync(string name, string singer, string suffix, string md5, string uname = "")
         {
             //加入歌曲
             bool exist = await CheckMD5Async(md5);
             if (exist)
                 return false;
             string command = string.Format("insert into u_music value('{0}','{1}','{2}','{3}');", name, singer, suffix, md5);
-            int count;
+            bool result = false;
             try
             {
-                count = await helper.ExecuteNonQueryAsync(command);
+                int t1 = await helper.ExecuteNonQueryAsync(command);
+                command = string.Format("insert into upload value('{0}','{1}');", uname, md5);
+                int t2 = await helper.ExecuteNonQueryAsync(command);
+                result = (t1 > 0) && (t2 > 0);
             }
             catch(Exception)
             {
                 return false;
             }
-            return count > 0;
+            return result;
         }
         public static async Task<DataSet> GetMusicList()
         {
