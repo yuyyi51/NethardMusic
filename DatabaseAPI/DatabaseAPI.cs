@@ -93,7 +93,7 @@ namespace DatabaseAPI
         }
         public static async Task<DataSet> GetMusicList()
         {
-            string command = "select * from u_music ;";
+            string command = "select * from u_music left join upload on u_music.MD5 = upload.MD5; ";
             try
             {
                 return await helper.ExecuteDataSetAsync(command);

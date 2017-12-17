@@ -204,6 +204,7 @@ namespace Server
                     info[i].singer = objs[1] as string;
                     string url = outpath + objs[3] + objs[2];
                     info[i].url = url;
+                    info[i].uname = objs[4] as string;
                 }
                 mess = GetGetListSuccessMessage(info);
             }

@@ -12,5 +12,6 @@ namespace NetworkAPI
         public string name;
         public string singer;
         public string url;
+        public string uname;
     }
 }
