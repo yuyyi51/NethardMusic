@@ -23,17 +23,17 @@ namespace ClientApp2
             string singer = textBox2.Text;
             if (name == "" || singer == "")
             {
-                MessageBox.Show("请输入歌名和歌手");
+                MessageBox.Show("Please input Title and Author");
                 return;
             }
             string path = textBox3.Text;
             if (path == "")
             {
-                MessageBox.Show("请先选择文件");
+                MessageBox.Show("Please select the file");
                 return;
             }
             bool result = await ClientAPI.ClientAPI.UploadMusic(path, name, singer,uname);
-            MessageBox.Show(result ? "上传成功" : "上传失败");
+            MessageBox.Show(result ? "Success" : "Failed");
         }
 
         private void button1_Click(object sender, EventArgs e)

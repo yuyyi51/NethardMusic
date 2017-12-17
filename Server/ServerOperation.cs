@@ -204,7 +204,8 @@ namespace Server
                     info[i].singer = objs[1] as string;
                     string url = outpath + objs[3] + objs[2];
                     info[i].url = url;
-                    info[i].uname = objs[4] as string;
+                    info[i].playedtimes = (int)objs[4];
+                    info[i].uname = objs[5] as string;
                 }
                 mess = GetGetListSuccessMessage(info);
             }
@@ -216,6 +217,21 @@ namespace Server
             {
                 con.Close();
                 return;
+            }
+            con.Close();
+        }
+        private static async void MusicPlayed(TcpConnection con, NetMessage message)
+        {
+            string md5 = message.Data as string;
+            WriteLog(con, "{0}被播放", md5);
+            bool sus = await API.MusicPlayed(md5);
+            if(sus)
+            {
+                WriteLog(con, "{0}增加播放量成功", md5);
+            }
+            else
+            {
+                WriteLog(con, "{0}增加播放量失败", md5);
             }
             con.Close();
         }

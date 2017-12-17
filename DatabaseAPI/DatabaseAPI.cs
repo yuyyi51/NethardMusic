@@ -103,5 +103,17 @@ namespace DatabaseAPI
                 return null;
             }
         }
+        public static async Task<bool> MusicPlayed(string md5)
+        {
+            string command = string.Format("update u_music set playedtimes = playedtimes + 1 where MD5 = '{0}' ;", md5);
+            try
+            {
+                return await helper.ExecuteNonQueryAsync(command) > 0;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -140,5 +140,19 @@ namespace ClientAPI
                 return null;
             }
         }
+        public static async Task MusicPlayed(string url)
+        {
+            string md5;
+            Console.Out.WriteLine(url);
+            string[] tem = url.Split('/');
+            string tem2 = tem[tem.Length - 1];
+            Console.Out.WriteLine(tem2);
+            md5 = tem2.Split('.')[0];
+            TcpConnection con = new TcpConnection();
+            await con.Connect(ip, port);
+            await con.Send(GetMusicPlayedMessage(md5));
+            Console.Out.WriteLine(md5);
+            con.Close();
+        }
     }
 }

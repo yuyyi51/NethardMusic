@@ -54,26 +54,39 @@ namespace Server
                 con.Close();
                 return;
             }
-            switch(message.Message)
+            try
             {
-                case MessageType.SignIn:
-                    SignIn(con, message);
-                    break;
-                case MessageType.SignUp:
-                    SignUp(con, message);
-                    break;
-                case MessageType.GetList:
-                    GetMusicList(con, message);
-                    break;
-                case MessageType.CheckMD5:
-                    CheckMD5(con, message);
-                    break;
-                case MessageType.Upload:
-                    AddMusic(con, message);
-                    break;
-                default:
-                    break;
+                switch(message.Message)
+                {
+                    case MessageType.SignIn:
+                        SignIn(con, message);
+                        break;
+                    case MessageType.SignUp:
+                        SignUp(con, message);
+                        break;
+                    case MessageType.GetList:
+                        GetMusicList(con, message);
+                        break;
+                    case MessageType.CheckMD5:
+                        CheckMD5(con, message);
+                        break;
+                    case MessageType.Upload:
+                        AddMusic(con, message);
+                        break;
+                    case MessageType.MusicPlayed:
+                        MusicPlayed(con, message);
+                        break;
+                    default:
+                        break;
+                }
             }
+            catch(Exception e)
+            {
+                Console.Out.WriteLine(DateTime.Now.ToString() + " " + con.ToString() + " " + e.Message);
+                con.Close();
+                return;
+            }
+
         }
         static void Main(string[] args)
         {

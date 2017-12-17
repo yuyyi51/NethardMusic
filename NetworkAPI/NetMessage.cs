@@ -20,6 +20,7 @@ namespace NetworkAPI
                 CheckMD5 = 13,
                 Upload = 14,
                 GetList = 15,
+                MusicPlayed = 16,
 
                 SignInFail = 21,
                 SignUpFail = 22,

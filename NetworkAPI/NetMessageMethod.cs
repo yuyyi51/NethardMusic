@@ -60,6 +60,10 @@ namespace NetworkAPI
             {
                 return new NetMessage(MessageType.Success);
             }
+            public static NetMessage GetMusicPlayedMessage(string md5)
+            {
+                return new NetMessage(MessageType.MusicPlayed, md5);
+            }
         }
     }
 }

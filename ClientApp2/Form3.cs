@@ -23,12 +23,12 @@ namespace ClientApp2
             string password = textBox2.Text;
             if (username == "" || password == "")
             {
-                MessageBox.Show("请输入用户名和密码");
+                MessageBox.Show("Please input Username and Password");
                 return;
             }
             bool result = await ClientAPI.ClientAPI.SignIn(username, password);
             //label1.Text = result.ToString();
-            MessageBox.Show(result ? "登录成功" : "登录失败");
+            MessageBox.Show(result ? "Success" : "Failed");
             if(result)
             {
                 father.username = username;
@@ -42,13 +42,13 @@ namespace ClientApp2
             string password = textBox2.Text;
             if (username == "" || password == "")
             {
-                MessageBox.Show("请输入用户名和密码");
+                MessageBox.Show("Please input Username and Password");
                 return;
             }
 
             bool result = await ClientAPI.ClientAPI.SignUp(username, password);
             //label1.Text = result.ToString();
-            MessageBox.Show(result ? "注册成功" : "注册失败");
+            MessageBox.Show(result ? "Success" : "Failed");
         }
     }
 }

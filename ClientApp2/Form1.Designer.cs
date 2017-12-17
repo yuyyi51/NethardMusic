@@ -52,6 +52,7 @@
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -174,7 +175,8 @@
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
-            this.columnHeader3});
+            this.columnHeader3,
+            this.columnHeader4});
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.Location = new System.Drawing.Point(12, 255);
@@ -198,7 +200,7 @@
             // 
             // columnHeader3
             // 
-            this.columnHeader3.Text = "上传者";
+            this.columnHeader3.Text = "Played Times";
             this.columnHeader3.Width = 200;
             // 
             // textBox5
@@ -257,6 +259,11 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(0, 12);
             this.label5.TabIndex = 19;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Uploader";
+            this.columnHeader4.Width = 200;
             // 
             // Form1
             // 
@@ -317,6 +324,7 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
     }
 }
 

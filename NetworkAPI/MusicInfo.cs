@@ -13,5 +13,6 @@ namespace NetworkAPI
         public string singer;
         public string url;
         public string uname;
+        public int playedtimes;
     }
 }

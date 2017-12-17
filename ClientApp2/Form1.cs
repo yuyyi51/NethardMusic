@@ -105,6 +105,7 @@ namespace ClientApp2
                 ListViewItem item = new ListViewItem();
                 item.Text = info.name;
                 item.SubItems.Add(info.singer);
+                item.SubItems.Add(info.playedtimes.ToString());
                 item.SubItems.Add(info.uname != null ? info.uname : "");
                 item.SubItems.Add(info.url);
                 listView1.Items.Add(item);
@@ -116,15 +117,16 @@ namespace ClientApp2
 
         }
 
-        private void listView1_DoubleClick(object sender, EventArgs e)
+        private async void listView1_DoubleClick(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count <= 0)
                 return;
             ListViewItem item = listView1.SelectedItems[0];
-            string url = item.SubItems[3].Text;
+            string url = item.SubItems[4].Text;
             //MessageBox.Show(url);
             axWindowsMediaPlayer1.URL = url;
             axWindowsMediaPlayer1.Ctlcontrols.play();
+            await ClientAPI.ClientAPI.MusicPlayed(url);
         }
 
         private void Form1_Load(object sender, EventArgs e)
