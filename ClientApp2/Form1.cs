@@ -13,6 +13,7 @@ namespace ClientApp2
 {
     public partial class Form1 : Form
     {
+        public string username = null;
         public Form1()
         {
             InitializeComponent();
@@ -76,7 +77,7 @@ namespace ClientApp2
             }
             button4.Enabled = false;
             button4.Text = "上传中";
-            bool result = await ClientAPI.ClientAPI.UploadMusic(path, name, singer);
+            bool result = await ClientAPI.ClientAPI.UploadMusic(path, name, singer, username);
             button4.Text = "上传";
             button4.Enabled = true;
             MessageBox.Show(result ? "上传成功" : "上传失败");
@@ -133,13 +134,20 @@ namespace ClientApp2
         private void button7_Click(object sender, EventArgs e)
         {
             Form2 dia = new Form2();
+            dia.uname = username;
             dia.ShowDialog();
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
             Form3 dia = new Form3();
+            dia.father = this;
             dia.ShowDialog();
+            if(username != null)
+            {
+                label5.Text = username;
+                button7.Enabled = true;
+            }
         }
     }
 }

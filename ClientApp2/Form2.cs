@@ -16,7 +16,7 @@ namespace ClientApp2
         {
             InitializeComponent();
         }
-
+        public string uname;
         private async void button2_Click(object sender, EventArgs e)
         {
             string name = textBox1.Text;
@@ -32,7 +32,7 @@ namespace ClientApp2
                 MessageBox.Show("请先选择文件");
                 return;
             }
-            bool result = await ClientAPI.ClientAPI.UploadMusic(path, name, singer);
+            bool result = await ClientAPI.ClientAPI.UploadMusic(path, name, singer,uname);
             MessageBox.Show(result ? "上传成功" : "上传失败");
         }
 

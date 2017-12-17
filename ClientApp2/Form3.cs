@@ -16,7 +16,7 @@ namespace ClientApp2
         {
             InitializeComponent();
         }
-
+        public Form1 father;
         private async void button1_Click(object sender, EventArgs e)
         {
             string username = textBox1.Text;
@@ -29,6 +29,11 @@ namespace ClientApp2
             bool result = await ClientAPI.ClientAPI.SignIn(username, password);
             //label1.Text = result.ToString();
             MessageBox.Show(result ? "登录成功" : "登录失败");
+            if(result)
+            {
+                father.username = username;
+                Close();
+            }
         }
 
         private async void button2_Click(object sender, EventArgs e)

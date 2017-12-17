@@ -146,8 +146,8 @@ namespace Server
             //byte[] file = message.Data as byte[];
             MusicFile file = message.Data as MusicFile;
             string md5 = GetMusicMD5(file.file);
-            WriteLog(con, "尝试上传音乐 {0}-{1}{2}:{3}", file.singer, file.name, file.suffix, md5);
-            bool success = await API.AddMusicAsync(file.name, file.singer, file.suffix, md5);
+            WriteLog(con, "用户 {0} 尝试上传音乐 {1}-{2}{3}:{4}", file.uname, file.singer, file.name, file.suffix, md5);
+            bool success = await API.AddMusicAsync(file.name, file.singer, file.suffix, md5, file.uname);
             NetMessage mess;
             if (success)
             {

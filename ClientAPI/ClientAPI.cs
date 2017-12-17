@@ -100,13 +100,14 @@ namespace ClientAPI
             fs.Close();
             return buffer;
         }
-        public static async Task<bool> UploadMusic(string path, string name, string singer)
+        public static async Task<bool> UploadMusic(string path, string name, string singer, string uname)
         {
             MusicFile file = new MusicFile();
             file.name = name;
             file.singer = singer;
             file.suffix = Path.GetExtension(path);
             file.file = GetFileByte(path);
+            file.uname = uname;
             //file.file = null;
             TcpConnection con = new TcpConnection();
             await con.Connect(ip, port);
