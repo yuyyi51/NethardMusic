@@ -64,6 +64,19 @@ namespace NetworkAPI
             {
                 return new NetMessage(MessageType.MusicPlayed, md5);
             }
+            public static NetMessage GetAddFavoriteMessage(string uname, string md5)
+            {
+                string[] s = { uname, md5 };
+                return new NetMessage(MessageType.AddFavorite, s);
+            }
+            public static NetMessage GetGetFavoriteMessage(string uname)
+            {
+                return new NetMessage(MessageType.GetFavoriteList, uname);
+            }
+            public static NetMessage GetGetFavoriteSuccessMessage(MusicInfo[] list)
+            {
+                return new NetMessage(MessageType.GetFavoriteSuccess, list);
+            }
         }
     }
 }

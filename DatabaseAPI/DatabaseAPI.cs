@@ -91,6 +91,20 @@ namespace DatabaseAPI
             }
             return result;
         }
+        public static async Task<bool> AddFavoriteAsync(string uname, string md5)
+        {
+            string command = string.Format("insert into favorite value('{0}','{1}');", uname, md5);
+            int re;
+            try
+            {
+                re = await helper.ExecuteNonQueryAsync(command);
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            return re > 0;
+        }
         public static async Task<DataSet> GetMusicList()
         {
             string command = "select * from u_music left join upload on u_music.MD5 = upload.MD5; ";
@@ -113,6 +127,18 @@ namespace DatabaseAPI
             catch(Exception)
             {
                 return false;
+            }
+        }
+        public static async Task<DataSet> GetFavoriteList(string uname)
+        {
+            string command = string.Format("select * from (select m_name,m_singer,m_suffix,u_music.MD5,playedtimes from u_music inner join (select * from favorite where username = '{0}') as tfavorite on u_music.MD5 = tfavorite.MD5) as fav left join upload on fav.MD5 = upload.MD5;", uname);
+            try
+            {
+                return await helper.ExecuteDataSetAsync(command);
+            }
+            catch(Exception)
+            {
+                return null;
             }
         }
     }

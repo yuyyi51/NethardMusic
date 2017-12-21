@@ -19,83 +19,6 @@ namespace ClientApp2
             InitializeComponent();
         }
 
-        private async void button1_Click(object sender, EventArgs e)
-        {
-            string username = textBox1.Text;
-            string password = textBox2.Text;
-            if (username == "" || password == "")
-            {
-                MessageBox.Show("请输入用户名和密码");
-                return;
-            }
-
-            bool result = await ClientAPI.ClientAPI.SignUp(username, password);
-            //label1.Text = result.ToString();
-            MessageBox.Show(result?"注册成功":"注册失败");
-        }
-
-        private async void button2_Click(object sender, EventArgs e)
-        {
-            string username = textBox1.Text;
-            string password = textBox2.Text;
-            if (username == "" || password == "")
-            {
-                MessageBox.Show("请输入用户名和密码");
-                return;
-            }
-            bool result = await ClientAPI.ClientAPI.SignIn(username, password);
-            //label1.Text = result.ToString();
-            MessageBox.Show(result ? "登录成功" : "登录失败");
-        }
-
-        private async void button3_Click(object sender, EventArgs e)
-        {
-            string path = textBox5.Text;
-            if (path == "")
-            {
-                MessageBox.Show("请先选择文件");
-                return;
-            }
-            bool result = await ClientAPI.ClientAPI.CheckMD5(path);
-            MessageBox.Show(result ? "没有相同文件" : "已有相同文件");
-        }
-
-        private async void button4_Click(object sender, EventArgs e)
-        {
-            string name = textBox3.Text;
-            string singer = textBox4.Text;
-            if(name == "" || singer == "")
-            {
-                MessageBox.Show("请输入歌名和歌手");
-                return;
-            }
-            string path = textBox5.Text;
-            if (path == "")
-            {
-                MessageBox.Show("请先选择文件");
-                return;
-            }
-            button4.Enabled = false;
-            button4.Text = "上传中";
-            bool result = await ClientAPI.ClientAPI.UploadMusic(path, name, singer, username);
-            button4.Text = "上传";
-            button4.Enabled = true;
-            MessageBox.Show(result ? "上传成功" : "上传失败");
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dia = new OpenFileDialog();
-            string path;
-            if (dia.ShowDialog() == DialogResult.OK)
-            {
-                path = dia.FileName;
-            }
-            else
-                return;
-            textBox5.Text = path;
-        }
-
         private async void button6_Click(object sender, EventArgs e)
         {
             listView1.Items.Clear();
@@ -124,14 +47,14 @@ namespace ClientApp2
             ListViewItem item = listView1.SelectedItems[0];
             string url = item.SubItems[4].Text;
             //MessageBox.Show(url);
-            axWindowsMediaPlayer1.URL = url;
-            axWindowsMediaPlayer1.Ctlcontrols.play();
+            axWindowsMediaPlayer3.URL = url;
+            axWindowsMediaPlayer3.Ctlcontrols.play();
             await ClientAPI.ClientAPI.MusicPlayed(url);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            axWindowsMediaPlayer1.settings.volume = 20;
+            axWindowsMediaPlayer3.settings.volume = 20;
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -150,7 +73,49 @@ namespace ClientApp2
             {
                 label5.Text = username;
                 button7.Enabled = true;
+                button1.Enabled = true;
+                button2.Enabled = true;
             }
+        }
+
+        private async void button2_Click_1(object sender, EventArgs e)
+        {
+            bool r = true;
+            foreach(ListViewItem item in listView1.SelectedItems)
+            {
+                string url = item.SubItems[4].Text;
+                bool re = await ClientAPI.ClientAPI.AddFavorite(username, url);
+                r &= re;
+            }
+            if(r)
+            {
+                MessageBox.Show("Successed");
+            }
+            else
+            {
+                MessageBox.Show("Operation failed. Maybe you have already added some of them into favorite list.");
+            }
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            listView1.Items.Clear();
+            MusicInfo[] infos = await ClientAPI.ClientAPI.GetFavoriteList(username);
+            foreach (MusicInfo info in infos)
+            {
+                ListViewItem item = new ListViewItem();
+                item.Text = info.name;
+                item.SubItems.Add(info.singer);
+                item.SubItems.Add(info.playedtimes.ToString());
+                item.SubItems.Add(info.uname != null ? info.uname : "");
+                item.SubItems.Add(info.url);
+                listView1.Items.Add(item);
+            }
+        }
+
+        private void axWindowsMediaPlayer1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -140,19 +140,55 @@ namespace ClientAPI
                 return null;
             }
         }
+        public static async Task<MusicInfo[]> GetFavoriteList(string uname)
+        {
+            TcpConnection con = new TcpConnection();
+            await con.Connect(ip, port);
+            await con.Send(GetGetFavoriteMessage(uname));
+            NetMessage message = await con.ReceiveOnceAsync() as NetMessage;
+            con.Close();
+            if (message.Message == MessageType.GetListSuccess)
+            {
+                return message.Data as MusicInfo[];
+            }
+            else
+            {
+                return null;
+            }
+        }
         public static async Task MusicPlayed(string url)
         {
-            string md5;
-            Console.Out.WriteLine(url);
-            string[] tem = url.Split('/');
-            string tem2 = tem[tem.Length - 1];
-            Console.Out.WriteLine(tem2);
-            md5 = tem2.Split('.')[0];
+            string md5 = GetMD5FromUrl(url);
             TcpConnection con = new TcpConnection();
             await con.Connect(ip, port);
             await con.Send(GetMusicPlayedMessage(md5));
-            Console.Out.WriteLine(md5);
+            //Console.Out.WriteLine(md5);
             con.Close();
+        }
+        public static string GetMD5FromUrl(string url)
+        {
+            string md5;
+            string[] tem = url.Split('/');
+            string tem2 = tem[tem.Length - 1];
+            md5 = tem2.Split('.')[0];
+            return md5;
+        }
+        public static async Task<bool> AddFavorite(string uname, string url)
+        {
+            string md5 = GetMD5FromUrl(url);
+            TcpConnection con = new TcpConnection();
+            await con.Connect(ip, port);
+            await con.Send(GetAddFavoriteMessage(uname, md5));
+            NetMessage mess = await con.ReceiveOnceAsync() as NetMessage;
+            con.Close();
+            if(mess.Message == MessageType.Success)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

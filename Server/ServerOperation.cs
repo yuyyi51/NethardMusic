@@ -220,6 +220,45 @@ namespace Server
             }
             con.Close();
         }
+        private static async void GetFavoriteList(TcpConnection con, NetMessage message)
+        {
+            string uname = message.Data as string;
+            WriteLog(con, "{0}尝试获取收藏列表", uname);
+            DataSet set = await API.GetFavoriteList(uname);
+            NetMessage mess;
+            if(set == null)
+            {
+                WriteLog(con, "{0}获取收藏列表失败", uname);
+                mess = GetFailMessage();
+            }
+            else
+            {
+                WriteLog(con, "{0}获取收藏列表成功", uname);
+                MusicInfo[] info = new MusicInfo[set.Tables[0].Rows.Count];
+                for (int i = 0; i != set.Tables[0].Rows.Count; ++i)
+                {
+                    info[i] = new MusicInfo();
+                    object[] objs = set.Tables[0].Rows[i].ItemArray;
+                    info[i].name = objs[0] as string;
+                    info[i].singer = objs[1] as string;
+                    string url = outpath + objs[3] + objs[2];
+                    info[i].url = url;
+                    info[i].playedtimes = (int)objs[4];
+                    info[i].uname = objs[5] as string;
+                }
+                mess = GetGetListSuccessMessage(info);
+            }
+            try
+            {
+                await con.Send(mess);
+            }
+            catch
+            {
+                con.Close();
+                return;
+            }
+            con.Close();
+        }
         private static async void MusicPlayed(TcpConnection con, NetMessage message)
         {
             string md5 = message.Data as string;
@@ -232,6 +271,34 @@ namespace Server
             else
             {
                 WriteLog(con, "{0}增加播放量失败", md5);
+            }
+            con.Close();
+        }
+        private static async void AddFavorite(TcpConnection con, NetMessage message)
+        {
+            string[] str = message.Data as string[];
+            string uname = str[0];
+            string md5 = str[1];
+            WriteLog(con, "{0}尝试添加收藏{1}", uname, md5);
+            bool sus = await API.AddFavoriteAsync(uname, md5);
+            NetMessage mess;
+            if(sus)
+            {
+                WriteLog(con, "{0}尝试添加收藏成功", uname);
+                mess = GetSuccessMessage();
+            }
+            else
+            {
+                WriteLog(con, "{0}尝试添加收藏失败", uname);
+                mess = GetFailMessage();
+            }
+            try
+            {
+                await con.Send(mess);
+            }
+            catch(Exception)
+            {
+                con.Close();
             }
             con.Close();
         }

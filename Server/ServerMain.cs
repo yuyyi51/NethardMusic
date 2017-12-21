@@ -76,6 +76,12 @@ namespace Server
                     case MessageType.MusicPlayed:
                         MusicPlayed(con, message);
                         break;
+                    case MessageType.AddFavorite:
+                        AddFavorite(con, message);
+                        break;
+                    case MessageType.GetFavoriteList:
+                        GetFavoriteList(con, message);
+                        break;
                     default:
                         break;
                 }

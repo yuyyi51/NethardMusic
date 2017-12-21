@@ -21,6 +21,8 @@ namespace NetworkAPI
                 Upload = 14,
                 GetList = 15,
                 MusicPlayed = 16,
+                AddFavorite = 17,
+                GetFavoriteList = 18,
 
                 SignInFail = 21,
                 SignUpFail = 22,
@@ -28,6 +30,7 @@ namespace NetworkAPI
                 GetListFail = 24,
 
                 GetListSuccess = 30,
+                GetFavoriteSuccess = 31,
                 Fail = 40,
                 Success = 50
             }

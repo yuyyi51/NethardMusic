@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ByteConverter.cs" />
+    <Compile Include="FavoriteMusic.cs" />
     <Compile Include="MusicFile.cs" />
     <Compile Include="MusicInfo.cs" />
     <Compile Include="NetMessage.cs" />
