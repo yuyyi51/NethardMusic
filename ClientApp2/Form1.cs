@@ -75,6 +75,9 @@ namespace ClientApp2
                 button7.Enabled = true;
                 button1.Enabled = true;
                 button2.Enabled = true;
+                button7.Visible = true;
+                button1.Visible = true;
+                button2.Visible = true;
             }
         }
 

@@ -76,7 +76,7 @@ namespace DatabaseAPI
             bool exist = await CheckMD5Async(md5);
             if (exist)
                 return false;
-            string command = string.Format("insert into u_music value('{0}','{1}','{2}','{3}');", name, singer, suffix, md5);
+            string command = string.Format("insert into u_music value('{0}','{1}','{2}','{3}',0);", name, singer, suffix, md5);
             bool result = false;
             try
             {
