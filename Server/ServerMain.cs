@@ -96,9 +96,9 @@ namespace Server
         }
         static void Main(string[] args)
         {
-            string host = "120.24.36.239";
+            string host = "0.0.0.0";
             int port = 7777;
-            string connectionstr = "server=localhost;user=root;database=test;port=3306;password=123sql";
+            string connectionstr = "server=localhost;user=newuser1;database=test;port=3306;password=123456";
             DatabaseAPI.API.Init(connectionstr);
             TcpServer server = new TcpServer(host, port);
             server.AcceptConnectionEvent += AcceptConnectionConsole;
